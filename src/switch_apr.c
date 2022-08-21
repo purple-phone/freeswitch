@@ -1182,7 +1182,6 @@ SWITCH_DECLARE(switch_status_t) switch_md5(unsigned char digest[SWITCH_MD5_DIGES
         EVP_DigestUpdate(mdctx, input, inputLen);
 
         // MD5_Final
-        digest = (unsigned char *)OPENSSL_malloc(digestLen);
         EVP_DigestFinal_ex(mdctx, digest, &digestLen);
         EVP_MD_CTX_free(mdctx);
 
