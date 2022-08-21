@@ -1172,7 +1172,6 @@ SWITCH_DECLARE(switch_status_t) switch_md5(unsigned char digest[SWITCH_MD5_DIGES
 	return SWITCH_STATUS_SUCCESS;
 #elif defined(HAVE_LIBCRYPTO)
         EVP_MD_CTX *mdctx;
-        unsigned int digestLen = EVP_MD_size(EVP_md5());
 
         // MD5_Init
         mdctx = EVP_MD_CTX_new();
@@ -1182,7 +1181,7 @@ SWITCH_DECLARE(switch_status_t) switch_md5(unsigned char digest[SWITCH_MD5_DIGES
         EVP_DigestUpdate(mdctx, input, inputLen);
 
         // MD5_Final
-        EVP_DigestFinal_ex(mdctx, digest, &digestLen);
+        EVP_DigestFinal_ex(mdctx, digest, NULL);
         EVP_MD_CTX_free(mdctx);
 
 	return SWITCH_STATUS_SUCCESS;
