@@ -76,7 +76,11 @@
 #if (defined(HAVE_LIBMD5) || defined(HAVE_LIBMD) || defined(HAVE_MD5INIT))
 #include <md5.h>
 #elif defined(HAVE_LIBCRYPTO)
-#include <openssl/evp.h>
+	#if OPENSSL_VERSION_NUMBER < 0x30000000
+		#include <openssl/md5.h>
+	#else
+		#include <openssl/evp.h>
+	#endif
 #else
 #include <apr_md5.h>
 #endif
