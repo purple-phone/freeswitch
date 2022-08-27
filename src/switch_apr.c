@@ -1171,19 +1171,23 @@ SWITCH_DECLARE(switch_status_t) switch_md5(unsigned char digest[SWITCH_MD5_DIGES
 
 	return SWITCH_STATUS_SUCCESS;
 #elif defined(HAVE_LIBCRYPTO)
-        EVP_MD_CTX *mdctx;
-
-        // MD5_Init
-        mdctx = EVP_MD_CTX_new();
-        EVP_DigestInit_ex(mdctx, EVP_md5(), NULL);
-
-        // MD5_Update
-        EVP_DigestUpdate(mdctx, input, inputLen);
-
-        // MD5_Final
-        EVP_DigestFinal_ex(mdctx, digest, NULL);
-        EVP_MD_CTX_free(mdctx);
-
+	
+	#if OPENSSL_VERSION_NUMBER < 0x30000000
+		MD5_CTX md5_context;
+		MD5_Init(&md5_context);
+		MD5_Update(&md5_context, input, inputLen);
+		MD5_Final(digest, &md5_context);
+	#else
+		EVP_MD_CTX *md5_context;
+		// MD5_Init
+		mdctx = EVP_MD_CTX_new();
+		EVP_DigestInit_ex(md5_context, EVP_md5(), NULL);
+		// MD5_Update
+		EVP_DigestUpdate(md5_context, input, inputLen);
+		// MD5_Final
+		EVP_DigestFinal_ex(md5_context, digest, NULL);
+		EVP_MD_CTX_free(md5_context);
+	#endif
 	return SWITCH_STATUS_SUCCESS;
 #else
 	return apr_md5(digest, input, inputLen);
