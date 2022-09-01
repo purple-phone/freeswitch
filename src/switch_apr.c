@@ -76,6 +76,9 @@
 #if (defined(HAVE_LIBMD5) || defined(HAVE_LIBMD) || defined(HAVE_MD5INIT))
 #include <md5.h>
 #elif defined(HAVE_LIBCRYPTO)
+	#ifndef OPENSSL_VERSION_NUMBER
+		#include <openssl/opensslv.h>
+	#endif
 	#if OPENSSL_VERSION_NUMBER < 0x30000000
 		#include <openssl/md5.h>
 	#else
@@ -1184,7 +1187,7 @@ SWITCH_DECLARE(switch_status_t) switch_md5(unsigned char digest[SWITCH_MD5_DIGES
 	#else
 		EVP_MD_CTX *md5_context;
 		// MD5_Init
-		mdctx = EVP_MD_CTX_new();
+		md5_context = EVP_MD_CTX_new();
 		EVP_DigestInit_ex(md5_context, EVP_md5(), NULL);
 		// MD5_Update
 		EVP_DigestUpdate(md5_context, input, inputLen);
