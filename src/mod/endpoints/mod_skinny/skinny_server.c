@@ -35,6 +35,8 @@
 #include "skinny_tables.h"
 #include "skinny_server.h"
 
+GCC_DIAG_OFF(array-bounds)
+
 uint32_t soft_key_template_default_textids[] = {
 	SKINNY_TEXTID_REDIAL,
 	SKINNY_TEXTID_NEWCALL,
@@ -2733,6 +2735,8 @@ switch_status_t skinny_handle_request(listener_t *listener, skinny_message_t *re
 			return SWITCH_STATUS_SUCCESS;
 	}
 }
+
+GCC_DIAG_ON(array-bounds)
 
 /* For Emacs:
  * Local Variables:

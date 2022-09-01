@@ -34,6 +34,8 @@
 #include "skinny_protocol.h"
 #include "skinny_tables.h"
 
+GCC_DIAG_OFF(array-bounds)
+
 /*****************************************************************************/
 /* SKINNY FUNCTIONS */
 /*****************************************************************************/
@@ -1333,6 +1335,8 @@ switch_status_t skinny_perform_send_reply(listener_t *listener, const char *file
 		return SWITCH_STATUS_FALSE;
 	}
 }
+
+GCC_DIAG_ON(array-bounds)
 
 /* For Emacs:
  * Local Variables:

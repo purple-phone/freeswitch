@@ -43,6 +43,8 @@
 /* Hardcode ptime in one place until we make it dynamic */
 #define SKINNY_PTIME 20
 
+GCC_DIAG_OFF(array-bounds)
+
 typedef enum {
 	SKINNY_CODEC_NONE = 0,
 	SKINNY_CODEC_NONSTANDARD = 1,
@@ -1247,6 +1249,8 @@ switch_status_t perform_send_extended_data(listener_t *listener,
 #define send_extended_data(listener, ...) perform_send_extended_data(listener, __FILE__, __SWITCH_FUNC__, __LINE__, __VA_ARGS__)
 
 #endif /* _SKINNY_PROTOCOL_H */
+
+GCC_DIAG_ON(array-bounds)
 
 /* For Emacs:
  * Local Variables:
